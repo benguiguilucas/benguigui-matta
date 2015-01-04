@@ -2,24 +2,19 @@
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:weightSum="1"
-    android:id="@+id/background"
-    android:background="@drawable/beerbackground"
-    >
+    android:layout_height="match_parent">
+
     <ListView
         android:layout_width="match_parent"
-        android:layout_height="233dp"
+        android:layout_height="432dp"
         android:id="@+id/beerView"
-        android:layout_gravity="center_horizontal"
-        android:layout_weight="0.26" />
+        android:layout_gravity="center_horizontal" />
 
-    <ImageView
-        android:layout_width="95dp"
+    <TextView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/imageView"
-        android:layout_gravity="center_horizontal"
-        android:layout_weight="0.33"
-        android:adjustViewBounds="false" />
-
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Empty"
+        android:id="@+id/etResponse"
+        android:layout_gravity="center_horizontal" />
 </LinearLayout>
