@@ -2,6 +2,9 @@ package com.game.kevin.designedapp;
 
 import android.app.ActionBar;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.view.Menu;
@@ -11,6 +14,7 @@ import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -32,6 +36,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.app.Activity;
+
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.ArrayList;
 
 /**
@@ -41,12 +49,16 @@ import java.util.ArrayList;
 public class ViewActivity extends HomeActivity implements View.OnClickListener {
     TextView etResponse;
     ListView listview;
-
+    ImageView imageBeer;
     String[] values = new String[] { "", "", "", "", "", "", "", "","", ""};
-    int id=0;
+    int id=0;boolean isImage=false;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view);
+        imageBeer = (ImageView) findViewById(R.id.imageView);
+        View backgroundImage = findViewById(R.id.background);
+        Drawable background = backgroundImage.getBackground();
+        background.setAlpha(50);
 
         StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
                 .detectDiskReads()
@@ -59,7 +71,6 @@ public class ViewActivity extends HomeActivity implements View.OnClickListener {
                 .penaltyLog()
                 .penaltyDeath()
                 .build());
-        etResponse = (TextView) findViewById(R.id.etResponse);
         // call AsynTask to perform network operation on separate thread
         new HttpAsyncTask().execute("http://binouze.fabrigli.fr/bieres/1.json");
         new HttpAsyncTask().execute("http://binouze.fabrigli.fr/bieres/2.json");
@@ -168,7 +179,10 @@ public class ViewActivity extends HomeActivity implements View.OnClickListener {
             @Override
             public void onItemClick(AdapterView<?> parent, final View view,
                                     int position, long id) {
-                final String item = (String) parent.getItemAtPosition(position);
+                isImage=true;int tmp=position+1;
+                new HttpAsyncTask().execute("http://binouze.fabrigli.fr/bieres/"+tmp+".json");
+               // isImage=false;
+                /*final String item = (String) parent.getItemAtPosition(position);
                 view.animate().setDuration(2000).alpha(0)
                         .withEndAction(new Runnable() {
                             @Override
@@ -177,7 +191,7 @@ public class ViewActivity extends HomeActivity implements View.OnClickListener {
                                 adapter.notifyDataSetChanged();
                                 view.setAlpha(1);
                             }
-                        });
+                        });*/
             }
 
         });
@@ -196,18 +210,89 @@ public class ViewActivity extends HomeActivity implements View.OnClickListener {
         // onPostExecute displays the results of the AsyncTask.
         @Override
         protected void onPostExecute(String result) {
-            Toast.makeText(getBaseContext(), "Received!", Toast.LENGTH_LONG).show();
-            try {
-                JSONObject mainObject = new JSONObject(result);
-               // JSONObject imageObject = mainObject.getJSONObject("image");
-                String  imageName = mainObject.getString("name");
-                values[id]=imageName;id++;
-                implementList();
-            } catch (JSONException e) {
-                e.printStackTrace();
+            if(!isImage) {
+                try {
+                    JSONObject mainObject = new JSONObject(result);
+                    // JSONObject imageObject = mainObject.getJSONObject("image");
+                    String imageName = mainObject.getString("name");
+                    values[id] = imageName;
+                    id++;
+                    implementList();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+            else{
+                try {
+                    JSONObject mainObject = new JSONObject(result);
+                    JSONObject imageObject = mainObject.getJSONObject("image");
+                    JSONObject imageObject2 = imageObject.getJSONObject("image");
+                    String imageUrl = imageObject2.getString("url");
+                   // values[1] = imageUrl;
+                    GetXMLTask task = new GetXMLTask();
+                    // Execute the task
+                    task.execute(new String[] { "http://binouze.fabrigli.fr" + imageUrl });
+                } catch (JSONException e) {Toast.makeText(getBaseContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+
+                    e.printStackTrace();
+                }
             }
 
         }
     }
+    private class GetXMLTask extends AsyncTask<String, Void, Bitmap> {
+        @Override
+        protected Bitmap doInBackground(String... urls) {
+            Bitmap map = null;
+            for (String url : urls) {
+                map = downloadImage(url);
+            }
+            return map;
+        }
 
+        // Sets the Bitmap returned by doInBackground
+        @Override
+        protected void onPostExecute(Bitmap result) {
+            imageBeer.setImageBitmap(result);
+        }
+
+        // Creates Bitmap from InputStream and returns it
+        private Bitmap downloadImage(String url) {
+            Bitmap bitmap = null;
+            InputStream stream = null;
+            BitmapFactory.Options bmOptions = new BitmapFactory.Options();
+            bmOptions.inSampleSize = 1;
+
+            try {
+                stream = getHttpConnection(url);
+                bitmap = BitmapFactory.
+                        decodeStream(stream, null, bmOptions);
+                stream.close();
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
+            return bitmap;
+        }
+
+        // Makes HttpURLConnection and returns InputStream
+        private InputStream getHttpConnection(String urlString)
+                throws IOException {
+            InputStream stream = null;
+            URL url = new URL(urlString);
+            URLConnection connection = url.openConnection();
+
+            try {
+                HttpURLConnection httpConnection = (HttpURLConnection) connection;
+                httpConnection.setRequestMethod("GET");
+                httpConnection.connect();
+
+                if (httpConnection.getResponseCode() == HttpURLConnection.HTTP_OK) {
+                    stream = httpConnection.getInputStream();
+                }
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+            return stream;
+        }
+    }
 }
