@@ -32,7 +32,7 @@ public class HomeActivity extends Activity implements View.OnClickListener{
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.home, menu);
         menu.findItem(R.id.action_search).getActionView();
-        
+
         return true;
     }
 

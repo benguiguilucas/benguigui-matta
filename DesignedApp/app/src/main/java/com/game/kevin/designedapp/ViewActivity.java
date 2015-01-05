@@ -4,6 +4,7 @@ import android.app.ActionBar;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.StrictMode;
@@ -46,7 +47,7 @@ public class ViewActivity extends HomeActivity implements View.OnClickListener {
         imageBeer = (ImageView) findViewById(R.id.imageView);
         imageFullScreen = (ImageView) findViewById(R.id.imageView2);
         View backgroundImage = findViewById(R.id.background);
-        Drawable background = backgroundImage.getBackground();
+        final Drawable background = backgroundImage.getBackground();
         background.setAlpha(50);
 
         StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
