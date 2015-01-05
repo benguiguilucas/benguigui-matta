@@ -1,0 +1,39 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:background="@drawable/back"
+    tools:context="games.thenewpong.newpong.activities.mainactivity"
+    android:gravity="center_horizontal">
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/newGame"
+        android:src="@drawable/newmatch"
+        android:background="@android:color/transparent"
+        android:adjustViewBounds="true"
+        android:maxWidth="120dp"
+        android:maxHeight="120dp"
+        android:scaleType="fitCenter"
+        android:layout_alignParentBottom="true"
+        android:layout_toLeftOf="@+id/highScore"
+        android:layout_marginBottom="39dp" />
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/highScore"
+        android:src="@drawable/highscoreb"
+        android:background="@android:color/transparent"
+        android:adjustViewBounds="true"
+        android:maxWidth="120dp"
+        android:maxHeight="120dp"
+        android:scaleType="fitCenter"
+        android:layout_alignTop="@+id/newGame"
+        android:layout_alignParentRight="true"
+        android:layout_marginLeft="10dp"
+        android:layout_alignParentEnd="true" />
+
+</RelativeLayout>

@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">thenewpong</string>
+    <string name="title">Can you survive ?</string>
+    <string name="textt">Restart</string>
+    <string name="scoret">Current Score : </string>
+    <color name="font">#FCF5B6</color>
+    <color name="gamefont">#000000</color>
+    <color name="text">#5F9EA0</color>
+</resources>

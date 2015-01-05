@@ -2,20 +2,12 @@ package com.game.kevin.designedapp;
 
 import android.app.ActionBar;
 import android.app.Activity;
-import android.app.SearchManager;
-import android.content.Context;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.content.Intent;
-import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.SearchView;
-import android.widget.Toast;
 
 
 public class HomeActivity extends Activity implements View.OnClickListener{
@@ -40,7 +32,7 @@ public class HomeActivity extends Activity implements View.OnClickListener{
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.home, menu);
         menu.findItem(R.id.action_search).getActionView();
-
+        
         return true;
     }
 
@@ -53,7 +45,7 @@ public class HomeActivity extends Activity implements View.OnClickListener{
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         if (id == R.id.action_search) { //TODO: find how to validate from the action bar
-            sendMessage();
+            search();
         }
         if (id == R.id.action_help) { //Launch the help activity
             Intent intent = new Intent(this, HelpActivity.class);
@@ -64,7 +56,8 @@ public class HomeActivity extends Activity implements View.OnClickListener{
         return super.onOptionsItemSelected(item);
     }
 
-    public void sendMessage() {
+    //Couldn't find how...
+    public void search() {
         Intent intent = new Intent(this, SearchActivity.class);
        // EditText editText = (EditText) findViewById(R.id.edit_message);
        // String message = editText.getText().toString();

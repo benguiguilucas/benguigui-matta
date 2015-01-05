@@ -1,0 +1,58 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/font"
+    android:weightSum="1">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="High Score"
+        android:textColor="#B22222"
+        android:textSize="70sp"
+        android:layout_gravity="center_horizontal"
+        android:id="@+id/title"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="player here"
+        android:id="@+id/listplayer"
+        android:textColor="@color/text"
+        android:textSize="40sp"
+        android:layout_alignTop="@+id/listscore"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="score here"
+        android:id="@+id/listscore"
+        android:textColor="@color/text"
+        android:textSize="40sp"
+        android:layout_gravity="right"
+        android:layout_marginTop="59dp"
+        android:layout_below="@+id/title"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Top 3"
+        android:id="@+id/textView"
+        android:textColor="@color/text"
+        android:textSize="40sp"
+        android:layout_above="@+id/listplayer"
+        android:layout_centerHorizontal="true" />
+
+
+</RelativeLayout>

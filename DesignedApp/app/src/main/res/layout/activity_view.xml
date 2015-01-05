@@ -1,25 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+<FrameLayout    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:weightSum="1"
     android:id="@+id/background"
-    android:background="@drawable/beerbackground"
-    >
+    android:background="@drawable/beerbackground" >
+
+
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/imageView2"
+         />
+
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:layout_gravity="center"
+        android:weightSum="1">
+
+    </LinearLayout>
+
     <ListView
         android:layout_width="match_parent"
         android:layout_height="233dp"
         android:id="@+id/beerView"
-        android:layout_gravity="center_horizontal"
-        android:layout_weight="0.26" />
+        android:layout_weight="0.26"
+        android:layout_gravity="center_horizontal|top" />
 
     <ImageView
-        android:layout_width="95dp"
-        android:layout_height="wrap_content"
-        android:id="@+id/imageView"
-        android:layout_gravity="center_horizontal"
-        android:layout_weight="0.33"
-        android:adjustViewBounds="false" />
-
-</LinearLayout>
+android:layout_width="127dp"
+android:layout_height="127dp"
+android:id="@+id/imageView"
+android:layout_gravity="center_horizontal|bottom"
+android:layout_weight="0.33"
+android:adjustViewBounds="false"
+android:contentDescription="image" />
+</FrameLayout>

@@ -1,13 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/beerbackground"
+    android:weightSum="1"
+    android:alpha="50" >
+
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Help"
-        android:id="@+id/titleHelp"
-        android:layout_gravity="center_horizontal" />
-</LinearLayout>
+        android:text="Help Me"
+        android:id="@+id/textView"
+        android:layout_gravity="center_horizontal"
+        android:textSize="50dp"
+        android:textStyle="bold"
+        android:typeface="monospace"
+        android:visibility="visible"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="10 of the best beers are listed."
+        android:id="@+id/textView2"
+        android:textSize="20sp"
+        android:typeface="monospace"
+        android:layout_below="@+id/textView"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="64dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:typeface="monospace"
+        android:text="Click on it to display its thumb"
+        android:id="@+id/textView3"
+        android:layout_centerVertical="true"
+        android:layout_alignRight="@+id/textView"
+        android:layout_alignEnd="@+id/textView" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="and on the thumb to view it in full screen."
+        android:id="@+id/textView4"
+        android:typeface="monospace"
+        android:layout_below="@+id/textView2"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="142dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="WARNING: You must have an internet connection"
+        android:id="@+id/textView5"
+        android:typeface="monospace"
+        android:layout_marginBottom="40dp"
+        android:textColor="#ffff0b0f"
+        android:textStyle="bold"
+        android:textSize="13sp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
+
+</RelativeLayout>

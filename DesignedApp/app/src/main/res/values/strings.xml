@@ -3,6 +3,8 @@
 
     <string name="app_name">Designed App</string>
     <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Settings</string>
+    <string name="action_settings">Settings</string><string name="helptext">10 of the best beers are listed
+        Click on it to display its thumb, and on the thumb to view it in full screen
+        Warning : You must have a Internet Connection</string>
 
 </resources>

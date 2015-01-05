@@ -10,10 +10,8 @@ import android.os.StrictMode;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import java.io.BufferedReader;
@@ -26,17 +24,8 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.AsyncTask;
-import android.os.Bundle;
 import android.util.Log;
-import android.widget.EditText;
-import android.widget.TextView;
-import android.widget.Toast;
-import android.app.Activity;
-
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
@@ -47,15 +36,15 @@ import java.util.ArrayList;
  */
 
 public class ViewActivity extends HomeActivity implements View.OnClickListener {
-    TextView etResponse;
-    ListView listview;
-    ImageView imageBeer;
+    ListView listview;boolean isFull=false;
+    ImageView imageBeer,imageFullScreen;
     String[] values = new String[] { "", "", "", "", "", "", "", "","", ""};
     int id=0;boolean isImage=false;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view);
         imageBeer = (ImageView) findViewById(R.id.imageView);
+        imageFullScreen = (ImageView) findViewById(R.id.imageView2);
         View backgroundImage = findViewById(R.id.background);
         Drawable background = backgroundImage.getBackground();
         background.setAlpha(50);
@@ -85,7 +74,27 @@ public class ViewActivity extends HomeActivity implements View.OnClickListener {
 
         listview = (ListView) findViewById(R.id.beerView);
 
+        imageBeer.setOnClickListener(new View.OnClickListener() {
+             @Override
+             public void onClick(View v) { //Fullscreen
+                 isFull=true;
+                 imageFullScreen.setVisibility(View.VISIBLE);
+                 imageBeer.setVisibility(View.INVISIBLE);
+                 listview.setVisibility(View.INVISIBLE);
+             }
+        });
 
+        imageFullScreen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) { //not fullscreen
+                if(isFull) {
+                    imageFullScreen.setVisibility(View.INVISIBLE);
+                    imageBeer.setVisibility(View.VISIBLE);
+                    listview.setVisibility(View.VISIBLE);
+                    isFull=false;
+                }
+            }
+        });
 
         ActionBar actionBar = getActionBar(); //Create the back button, to go back to the previous activity
         actionBar.setDisplayHomeAsUpEnabled(true);
@@ -107,7 +116,7 @@ public class ViewActivity extends HomeActivity implements View.OnClickListener {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         if (id == R.id.action_search) { //TODO: find how to validate from the action bar
-            sendMessage();
+            search();
         }
         if (id == R.id.action_help) { //Launch the help activity
             Intent intent = new Intent(this, HelpActivity.class);
@@ -143,6 +152,7 @@ public class ViewActivity extends HomeActivity implements View.OnClickListener {
                 result = convertInputStreamToString(inputStream);
             else
                 result = "Did not work!";
+
 
         } catch (Exception e) {
             Log.d("InputStream", e.getLocalizedMessage());
@@ -180,18 +190,9 @@ public class ViewActivity extends HomeActivity implements View.OnClickListener {
             public void onItemClick(AdapterView<?> parent, final View view,
                                     int position, long id) {
                 isImage=true;int tmp=position+1;
+                //Get the picture of the clicked name and show it
                 new HttpAsyncTask().execute("http://binouze.fabrigli.fr/bieres/"+tmp+".json");
-               // isImage=false;
-                /*final String item = (String) parent.getItemAtPosition(position);
-                view.animate().setDuration(2000).alpha(0)
-                        .withEndAction(new Runnable() {
-                            @Override
-                            public void run() {
-                                list.remove(item);
-                                adapter.notifyDataSetChanged();
-                                view.setAlpha(1);
-                            }
-                        });*/
+
             }
 
         });
@@ -232,8 +233,7 @@ public class ViewActivity extends HomeActivity implements View.OnClickListener {
                     GetXMLTask task = new GetXMLTask();
                     // Execute the task
                     task.execute(new String[] { "http://binouze.fabrigli.fr" + imageUrl });
-                } catch (JSONException e) {Toast.makeText(getBaseContext(), e.getMessage(), Toast.LENGTH_LONG).show();
-
+                } catch (JSONException e) {
                     e.printStackTrace();
                 }
             }
@@ -254,6 +254,7 @@ public class ViewActivity extends HomeActivity implements View.OnClickListener {
         @Override
         protected void onPostExecute(Bitmap result) {
             imageBeer.setImageBitmap(result);
+            imageFullScreen.setImageBitmap(result);imageFullScreen.setVisibility(View.INVISIBLE);
         }
 
         // Creates Bitmap from InputStream and returns it
@@ -289,6 +290,7 @@ public class ViewActivity extends HomeActivity implements View.OnClickListener {
                 if (httpConnection.getResponseCode() == HttpURLConnection.HTTP_OK) {
                     stream = httpConnection.getInputStream();
                 }
+
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
